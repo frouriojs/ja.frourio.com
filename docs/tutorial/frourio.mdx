@@ -1,25 +1,25 @@
 ---
 id: frourio
-title: Introduce Frourio
+title: Frourio の導入
 ---
 
 import BrowserWindow from '@site/src/components/BrowserWindow';
 
-We made **the client type-safe** on the previous page.
+前のページで、**クライアントの型安全** は実現しました。
 
-However, there are still parts of this project that are **not type-safe**. What is it?
+しかしながら、このプロジェクトにはまだ **型安全でない** 部分が存在します。それはなんでしょう？
 
-It is **the server**.
+**サーバー** です。
 
-So, let's install frourio into the server and build a type-safe **'One TypeScript'**.
+それでは、frourio をサーバーに導入し、型安全な **「１つの TypeScript」** を構築しましょう。
 
-## 1. Set Up Frourio Server {#set-up-frourio-server}
+## 1. Frourio サーバーのセットアップ {#set-up-frourio-server}
 
-### 1.1. Move API Specification {#move-api-specification}
+### 1.1. API 定義を移動する {#move-api-specification}
 
-In frourio, the server is implemented as an extension of the previous api definition.
+Frourio において、サーバーは前述の API 定義の延長として実装されます。
 
-Therefore, first, migrate the api specification to the server directory.
+したがって、まずは、API 定義ファイルをサーバーのディレクトリに移動します。
 
 ```sh title=Terminal
 cd server
@@ -28,24 +28,24 @@ mkdir api
 yarn frourio --watch
 ```
 
-In another terminal session,
+別のターミナルセッションで、
 
 ```sh title=Terminal
 mkdir api/hi
 ```
 
-Next, copy the API type definitions in src/api to server/api.
+次に、`src/api` にある API 型定義を `server/api` にコピーします。
 
 ```sh title=Terminal
 cp ../src/api/index.ts api
 cp ../src/api/hi/index.ts api/hi
 ```
 
-### 1.2. Implement Controllers {#implement-controllers}
+### 1.2. コントローラーを実装する {#implement-controllers}
 
-By default, body is typed as string, and you can see the type error in `api/controller.ts`.
+デフォルトでは、body は文字列として生成されており、`api/controller.ts` に型エラーが発生しています。
 
-Then, specify `{ hello: 'world' }` to the body, and the type error will be resolved.
+続いて、body に `{ hello: 'world' }` を指定することで、型エラーが解消されます。
 
 ```diff title=server/api/controller.ts
  import {defineController} from './$relay';
@@ -56,13 +56,13 @@ Then, specify `{ hello: 'world' }` to the body, and the type error will be resol
  }));
 ```
 
-Also, the body of `api/hi` should be replaced with `{ hello: 'how are you?' }`.
+また、`api/hi` の body も `{ hello: 'how are you?' }` に置き換える必要があります。
 
-### 1.3. Start Frourio Server {#start-frourio-server}
+### 1.3. Frourio サーバーを起動する {#start-frourio-server}
 
-You can see $server.ts has been generated in the server directory.
+`server` ディレクトリに `$server.ts` が生成されていることを確認してください。
 
-Modify index.ts to start the server using this.
+`index.ts` を編集し、これを用いてサーバーを起動します。
 
 ```diff title=server/index.ts
  import Fastify from 'fastify';
@@ -85,13 +85,13 @@ Modify index.ts to start the server using this.
  fastify.listen({ port: 8888, host: '0.0.0.0' });
 ```
 
-It's time to start the frourio server!
+さて、frourio サーバーを起動しましょう！
 
 ```sh title=Terminal
 yarn ts-node index.ts
 ```
 
-Just to be sure, confirm that the server works as well as before.
+念のため、サーバーが以前と同じように動いているか確認しましょう。
 
 ```sh title=Terminal
 curl http://localhost:8888
@@ -103,9 +103,9 @@ const response = await fetch('http://localhost:8888');
 await response.json();
 ```
 
-### 1.4. Modify Client {#modify-client}
+### 1.4. クライアントを変更する {#modify-client}
 
-Since the api directory has been moved, the paths referenced by the client should also be changed.
+`api` ディレクトリを移動したので、クライアントから参照するパスも変更する必要があります。
 
 ```diff title=aspida.config.js
  module.exports = {
@@ -120,17 +120,17 @@ Since the api directory has been moved, the paths referenced by the client shoul
 +import $api from "../server/api/$api";
 ```
 
-In addition, regenerate the API definition file.
+さらに、API 定義ファイルも再生成しておきましょう。
 
 ```sh title='Terminal'
 yarn aspida
 ```
 
-### 1.5. Final Result {#final-result}
+### 1.5. 最終的な結果 {#final-result}
 
-It looks the same as the previous page.
+以前のページと同じように見えます。
 
-However, there is a big difference that **'One TypeScript' is realized** inside.
+しかしながら、その裏には **「１つの TypeScript」が実現されている** という大きな違いがあるのです。
 
 ---
 
@@ -140,18 +140,18 @@ _How are you?_
   <img src="/img/tutorial/cra-how-are-you.png" />
 </BrowserWindow>
 
-:::note Can't you get it?
+:::note うまくいきませんでしたか？
 
-Check the following.
+次の事項を確認してみてください。
 
-1. Did you start the back-end server? (`yarn ts-node index.ts` in `frourio-tutorial/server` directory)
-2. Did you start the front-end server? (`yarn start` in `frourio-tutorial` directory)
-3. Did you generate the server file? (`yarn frourio` in `frourio-tutorial/server` directory)
-4. Did you generate the API file? (`yarn aspida` in `frourio-tutorial` directory)
+1. バックエンドサーバーを起動していますか？（`frourio-tutorial/server` ディレクトリで `yarn ts-node index.ts` を実行）
+2. フロントエンドサーバーを起動していますか？（`frourio-tutorial` ディレクトリで `yarn start` を実行）
+3. サーバーファイルを生成しましたか？（`frourio-tutorial/server` ディレクトリで `yarn frourio` を実行）
+4. API ファイルを生成しましたか？（`frourio-tutorial` ディレクトリで `yarn aspida` を実行）
 
 :::
 
-## 2. Other Frourio Features {#other-frourio-features}
+## 2. Frourio のその他の機能 {#other-frourio-features}
 
-This tutorial does not cover all the features of frourio such as Hooks or Validation.
-For more information about them, please refer to [Docs](/docs).
+フックやバリデーションのように、このチュートリアルには frourio の機能がすべて含まれているわけではありません。
+これらについての情報は、[ドキュメント](/docs) を参照してください。
