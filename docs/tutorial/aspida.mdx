@@ -1,32 +1,32 @@
 ---
 id: aspida
-title: Introduce Aspida
+title: Aspida の導入
 ---
 
 import BrowserWindow from '@site/src/components/BrowserWindow';
 
-Let's try sending HTTP requests from the client to the Fastify server we have set up on the previous page.
+前のページでセットアップした Fastify サーバーに、クライアントから HTTP リクエストを送信しましょう。
 
-By the way, if you use common HTTP clients such as fetch or axios, the response type will be `any`, and you will not be able to achieve 'One TypeScript'.
+ところで、fetch や axios など一般の HTTP クライアントを使うと、レスポンスの型は `any` になり、「１つの TypeScript」に到達することが難しくなります。
 
-Therefore, we use [aspida](https://github.com/aspida/aspida), a TypeScript-friendly HTTP client wrapper.
+そこで、TypeScript フレンドリーな HTTP クライアントラッパーである [aspida](https://github.com/aspida/aspida) を使いましょう。
 
 <div style={{ textAlign: 'center', padding: '16px' }}>
   <img src="https://aspida.github.io/aspida/logos/svg/black.svg" style={{ width: 300 }} />
 </div>
 
-## 1. Specify API Type Definition {#specify-api-type-definition}
+## 1. API を型定義する {#specify-api-type-definition}
 
-### 1.1. Create API Definition Files {#create-api-definition-files}
+### 1.1. API 定義ファイルを作成する {#create-api-definition-files}
 
-Back to `frourio-tutorial` directory, and prepare api type definitions.
+`frourio-tutorial` ディレクトリに戻り、API 型定義を用意します。
 
 ```sh title=Terminal
 mkdir -p src/api/hi
 yarn add aspida
 ```
 
-Create and edit `src/api/index.ts` and `src/api/hi/index.ts` as follows.
+`src/api/index.ts` と `src/api/hi/index.ts` を作成し、以下のように編集します。
 
 ```ts title='src/api/index.ts, src/api/hi/index.ts'
 import { DefineMethods } from 'aspida';
@@ -41,12 +41,12 @@ export type Methods = DefineMethods<{
 ```
 
 :::tip
-We recommend to use `DefineMethods` **with semicolon** in order to get proper editor support.
+エディターによる適切な支援を受けるために、`DefineMethods` は **セミコロンと共に** 使うことをおすすめします。
 :::
 
-### 1.2. Prepare Aspida Config File {#prepare-aspida-config-file}
+### 1.2. Aspida の設定ファイルを用意する {#prepare-aspida-config-file}
 
-Create and edit `aspida.config.js` as follows.
+`aspida.config.js` を作成し、以下のように編集します。
 
 ```js title=aspida.config.js
 module.exports = {
@@ -55,44 +55,44 @@ module.exports = {
 };
 ```
 
-### 1.3. Generate Object with Aspida {#generate-object-with-aspida}
+### 1.3. Aspida でオブジェクトを生成する {#generate-object-with-aspida}
 
-Next, generate api definition with aspida.
+次に、aspida を用いて API 定義を生成します。
 
-Aspida, a CLI tool, converts api definition files corresponding to each path into **a single object**.
+CLI ツールである aspida は、API 型定義ファイルを対応するパスとし、**1 つのオブジェクト** に変換します。
 
 ```sh title=Terminal
 yarn aspida
 ```
 
-Aspida generates `api/$api.ts`.
-This file contains information about endpoints and type definitions of each HTTP method for them as the object hierarchy.
+Aspida は `api/$api.ts` を生成します。
+このファイルにはエンドポイントの情報とそれぞれの HTTP メソッドについての型定義がオブジェクトの階層構造として含まれています。
 
-### 1.4. Read `$api.ts` File (Optional) {#read-api-file}
+### 1.4. `$api.ts` ファイルを読む（任意） {#read-api-file}
 
 :::info
-If you already know about aspida, you can skip this section.
+すでに aspida について知っている場合は、このセクションを飛ばしても構いません。
 :::
 
-Let's take a look at `api/$api.ts`.
+`api/$api.ts` に注目してみましょう。
 
-In this file, there is a function named `api`. This function returns an object with information about endpoints.
+このファイルには、`api` という名の関数があります。この関数はエンドポイントについての情報を持ったオブジェクトを返します。
 
-Since all this information is fully typed, we can call the endpoints type-safe.
+すべての情報が完全に型付けられているので、エンドポイントを型安全に呼び出せるというわけです。
 
-## 2. Send API Requests {#send-api-requests}
+## 2. API リクエストを送信する {#send-api-requests}
 
-### 2.1. Create API Client {#create-api-client}
+### 2.1. API クライアントを作成する {#create-api-client}
 
-To send api requests, use an HTTP client wrapper such as `@aspida/fetch` or `@aspida/axios`.
+API リクエストを送信するには、`@aspida/fetch` や `@aspida/axios` などの HTTP クライアントラッパーを使用します。
 
-In this tutorial, we use `@aspida/fetch`.
+このチュートリアルでは、`@aspida/fetch` を使いましょう。
 
 ```sh title=Terminal
 yarn add @aspida/fetch
 ```
 
-Next, create and edit `src/apiClient.ts` as follows.
+次に、`src/apiClient.ts` を作成し、以下のように編集します。
 
 ```ts title=src/apiClient.ts
 import api from './api/$api';
@@ -107,9 +107,9 @@ const apiClient = api(
 export default apiClient;
 ```
 
-### 2.2. Fetch from Server {#fetch-from-server}
+### 2.2. サーバーから取得する {#fetch-from-server}
 
-Then, edit `src/App.tsx` as follows.
+続いて、`src/App.tsx` を以下のように編集します。
 
 ```diff title=src/App.tsx
 -import React from 'react';
@@ -126,11 +126,11 @@ Then, edit `src/App.tsx` as follows.
 +  }, []);
 ```
 
-Here we have api response in `greeting`.
+これで `greeting` に API レスポンスが得られました。
 
-### 2.3. Display Greeting {#display-greeting}
+### 2.3. Greeting を表示する {#display-greeting}
 
-All that remains is to display it.
+あと残っているのは、表示するだけです。
 
 ```diff title=src/App.tsx
          <p>
@@ -151,12 +151,12 @@ _How are you?_
   <img src="/img/tutorial/cra-how-are-you.png" />
 </BrowserWindow>
 
-:::note Can't you get it?
+:::note うまくいきませんでしたか？
 
-Check the following.
+次の事項を確認してみてください。
 
-1. Did you start the back-end server? (`yarn ts-node index.ts` in `frourio-tutorial/server` directory)
-2. Did you start the front-end server? (`yarn start` in `frourio-tutorial` directory)
-3. Did you generate the API file? (`yarn aspida` in `frourio-tutorial` directory)
+1. バックエンドサーバーを起動していますか？（`frourio-tutorial/server` ディレクトリで `yarn ts-node index.ts` を実行）
+2. フロントエンドサーバーを起動していますか？（`frourio-tutorial` ディレクトリで `yarn start` を実行）
+3. API ファイルを生成しましたか？（`frourio-tutorial` ディレクトリで `yarn aspida` を実行）
 
 :::

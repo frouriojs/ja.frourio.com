@@ -46,7 +46,7 @@ module.exports = {
         {
           type: 'docSidebar',
           sidebarId: 'tutorial',
-          label: 'Tutorial',
+          label: 'チュートリアル',
           position: 'left',
         },
         {
