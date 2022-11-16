@@ -52,7 +52,7 @@ module.exports = {
         {
           to: 'changelog',
           activeBasePath: 'changelog',
-          label: 'Changelog',
+          label: '変更履歴',
           position: 'left',
         },
         {
@@ -71,28 +71,28 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'ドキュメント',
           items: [
             {
-              label: 'About Frourio',
+              label: 'Frourio について',
               to: '/docs',
             },
             {
-              label: 'Reference',
+              label: 'リファレンス',
               to: '/docs/reference',
             },
             {
-              label: 'Guide',
+              label: 'ガイド',
               to: '/docs/guide',
             },
             {
-              label: 'Tutorial',
+              label: 'チュートリアル',
               to: '/docs/tutorial',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'コミュニティ',
           items: [
             {
               label: 'Discord',
@@ -105,10 +105,10 @@ module.exports = {
           ],
         },
         {
-          title: 'More',
+          title: 'もっと見る',
           items: [
             {
-              label: 'Changelog',
+              label: '変更履歴',
               to: 'changelog',
             },
             {
