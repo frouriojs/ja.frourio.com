@@ -1,0 +1,161 @@
+---
+id: zod
+title: Zod
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<div style={{display: 'flex', alignItems: 'flex-start', gap: 16 }}>
+
+<img src="https://zod.dev/logo.svg" alt="Zod logo" width="80px" />
+
+- [colinhacks/zod: TypeScript\-first schema validation with static type inference](https://github.com/colinhacks/zod)
+- [zod \- npm](https://www.npmjs.com/package/zod)
+- [Zod | Documentation](https://zod.dev/)
+
+</div>
+
+Frourio ではバリデーションに zod を使用します。Zod スキーマの定義方法については上のリンクからドキュメントを参照してください。
+
+## 2 種類のバリデーター {#two-types-of-validators}
+
+Frourio は **コントローラーレベル バリデーター** と **ディレクトリレベル バリデーター** の 2 種類のバリデーターを提供しています。
+それぞれで検証可能な要素が異なります。
+
+- **コントローラーレベル バリデーター**: 現在の階層でのみ呼ばれます。**`params` は検証できません。**
+  - `query`
+  - `headers`
+  - `body`
+- **ディレクトリレベル バリデーター**: 現在と _配下の_ 階層で呼ばれます。**`params` のみ検証できます。**
+  - `params`
+
+## コントローラーレベル {#controller-level}
+
+`validator` と `handler` を key に持つ**オブジェクトが `defineController` に** [`ServerMethodHandler`](/docs/reference/controller#object-servermethodhandler) として**渡されると**、Frourio は [`ServerHandler`](/docs/reference/controller#function-serverhandler) の引数 `Requestparams` を検証します。
+
+`valiator` は `RequestParams` と同じ key を持ち、**zod オブジェクトスキーマ** (`z.object()`) を value に持つオブジェクトです。
+
+それぞれのスキーマは `z.ZodType` を用いて API 型定義との一貫性が確認されます。
+
+```ts title='server/api/_id@string/index.ts'
+import { DefineMethods } from 'aspida';
+import { Fuga, Res } from '$/types';
+
+export type Methods = DefineMethods<{
+  get: {
+    resBody: string;
+  };
+  post: {
+    // highlight-start
+    reqBody: {
+      hogeString: string;
+      fugaObject: Fuga;
+      piyoBoolean?: boolean;
+    };
+    query: {
+      length?: number;
+    };
+    // highlight-end
+    resBody: Res;
+  };
+}>;
+```
+
+```ts title='server/api/_id@string/controller.ts'
+import { defineController } from './$relay';
+// highlight-next-line
+import { z } from 'zod';
+
+export default defineController(() => ({
+  get: () => ({ status: 200, body: 'Hello' }),
+  post: {
+    // highlight-start
+    validators: {
+      query: z.object({
+        length: z.number().optional(),
+      }),
+      body: z.object({
+        hogeString: z.string(),
+        fugaObject: z.object({ ... }),
+        piyoBoolean: z.boolean().optional(),
+      }),
+    },
+    // highlight-end
+    handler: async ({ params: { id }, body, query: { length } }) => {
+      const res = await createBaz(id, body, length);
+      if (!res) return { status: 400 };
+      return { status: 201, body: res };
+    },
+  },
+}));
+```
+
+## ディレクトリレベル {#directory-level}
+
+ディレクトリレベルバリデーターを定義するには、対象のディレクトリの最上層に `validators.ts` を作成し、`./$relay.ts` でエクスポートされた `defineValidators` を使用します。
+
+エンドポイントに影響する複数のディレクトリレベルバリデーターがある場合、`.and` を用いて交差型に変換されます。
+
+:::note
+
+名前にパスパラメータを持つディレクトリが作成された際、Frourio は自動的に `validators.ts` を作成します。
+
+:::
+
+```ts title='server/api/_id@string/validators.ts'
+import { defineValidators } from './$relay';
+import { z } from 'zod';
+
+export default defineValidators(() => ({
+  params: z.object({ id: z.string() }),
+}));
+```
+
+### `defineValidators` 関数 {#function-definevalidators}
+
+<Tabs
+  groupId='base-framework'
+  defaultValue="fastify"
+  values={[
+    { label: 'Fastify', value: 'fastify' },
+    { label: 'Express', value: 'express' },
+  ]}
+>
+<TabItem value="fastify">
+
+#### 引数の型 {#definevalidators-argument-type}
+
+- function `(fastify: FastifyInstance) => { params: (zod object schema) }`
+
+`(zod object schema)` の実際の定義は `z.ZodType<{ (params type) }>` ですが、これを意識する必要はありません。
+これによって API 型定義との一貫性が確保されているのです。
+
+:::note `{ (params type) }`
+
+そのディレクトリが持つパスパラメータの型定義。
+上位のディレクトリのものは含まれません。
+無指定の場合は `string` になりますが、[自動バリデーションのページ](/docs/reference/validation/automatic#path-parameter)にもあるように、指定することを推奨します。
+
+:::
+
+</TabItem>
+<TabItem value="express">
+
+#### 引数の型 {#definevalidators-argument-type}
+
+- function `(app: Express) => { params: (zod object schema) }`
+
+`(zod object schema)` の実際の定義は `z.ZodType<{ (params type) }>` ですが、これを意識する必要はありません。
+これによって API 型定義との一貫性が確保されているのです。
+
+:::note `{ (params type) }`
+
+そのディレクトリが持つパスパラメータの型定義。
+上位のディレクトリのものは含まれません。
+無指定の場合は `string` になりますが、[自動バリデーションのページ](/docs/reference/validation/automatic#path-parameter)にもあるように、指定することを推奨します。
+
+:::
+
+</TabItem>
+</Tabs>

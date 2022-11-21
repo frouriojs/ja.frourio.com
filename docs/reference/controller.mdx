@@ -41,27 +41,58 @@ defineController の戻り値は default export する必要があります。
 >
 <TabItem value="fastify">
 
-- function `(fastify: FastifyInstance) => ControllerMethods`
+- function `(fastify: FastifyInstance) => ServerMethods`
   - [`FastifyInstance`](https://www.fastify.io/docs/latest/Reference/TypeScript/#fastifyfastifyinstancerawserver-rawrequest-requestgeneric-logger)
-  - `ControllerMethods` : メソッド名を key とし、リクエストハンドラを value とするオブジェクト
+  - `ServerMethods` : メソッド名を key とし、[ServerMethodHandler](#object-servermethodhandler) を value とするオブジェクト
 
 </TabItem>
 <TabItem value="express">
 
 - function `(app: Express) => ControllerMethods`
   - [`Express`](https://expressjs.com/en/4x/api.html)
-  - `ControllerMethods` : メソッド名を key とし、リクエストハンドラを value とするオブジェクト
+  - `ServerMethods` : メソッド名を key とし、[ServerMethodHandler](#object-servermethodhandler) を value とするオブジェクト
 
 </TabItem>
 </Tabs>
 
 ### 戻り値の型 {#definecontoller-return-type}
 
-- object `ControllerMethods`
+- object `ServerMethods`
 
-## リクエストハンドラ {#value-of-controllermethods}
+## `ServerMethodHandler` オブジェクト {#object-servermethodhandler}
 
-### 引数の型 {#controllermethods-argument-type}
+```ts title='$server.ts (formatted)'
+export type ServerMethodHandler<T extends AspidaMethodParams, U extends Record<string, any> = {}> =
+  | ServerHandler<T, U>
+  | ServerHandlerPromise<T, U>
+  | {
+      validators?: Partial<{ [Key in keyof RequestParams<T>]?: z.ZodType<RequestParams<T>[Key]> }>;
+      handler: ServerHandler<T, U> | ServerHandlerPromise<T, U>;
+    };
+```
+
+- [`ServerHandler`](#function-serverhandler) または
+- <code>
+    <a href="#function-serverhandler">ServerHandler</a>Promise
+  </code> または
+- <code>
+    {'{ validators?: '}
+    <a href="/docs/reference/validation/zod#controller-level">(Controller-level Validators)</a>
+    {', handler: '}
+    <a href="#function-serverhandler">ServerHandler</a>
+    {' }'}
+  </code> または
+- <code>
+    {'{ validators?: '}
+    <a href="/docs/reference/validation/zod#controller-level">(Controller-level Validators)</a>
+    {', handler: '}
+    <a href="#function-serverhandler">ServerHandler</a>Promise
+    {' }'}
+  </code>
+
+## `ServerHandler` 関数 {#function-serverhandler}
+
+### 引数の型 {#serverhandler-argument-type}
 
 - object `RequestParams` & [`AdditinalRequest`](/docs/reference/additionalRequest)
   - `query` : `query`
@@ -78,4 +109,4 @@ defineController の戻り値は default export する必要があります。
 
 `RequestParams` 型と `ServerResponse` 型は API 型定義に基づいて決定されます。
 
-また、それぞれのリクエストハンドラは同期・非同期どちらでも可能です。
+async を用いて Promise となった場合、<code>ServerHandler<b>Promise</b></code> になります。
