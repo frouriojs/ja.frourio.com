@@ -15,7 +15,7 @@ module.exports = {
         'reference/hooks',
         'reference/additionalRequest',
         {
-          'バリデーション': [
+          バリデーション: [
             'reference/validation/automatic',
             'reference/validation/zod',
             'reference/validation/class-validator',
