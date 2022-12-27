@@ -15,19 +15,37 @@ module.exports = {
       { name: 'twitter:card', content: 'summary_large_image' },
       {
         name: 'description',
+<<<<<<< HEAD
         content: 'Frourio は TypeScript のためのフルスタックフレームワークです。',
       },
       {
         property: 'og:description',
         content: 'Frourio は TypeScript のためのフルスタックフレームワークです。',
+=======
+        content:
+          'Frourio is a CLI tool that enables static type checking by Typescript for communication between client-side and server-side.',
+      },
+      {
+        property: 'og:description',
+        content:
+          'Frourio is a CLI tool that enables static type checking by Typescript for communication between client-side and server-side.',
+>>>>>>> upstream/master
       },
     ],
     colorMode: {
       defaultMode: 'light',
-      disableSwitch: true,
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
     },
     prism: {
       theme: require('prism-react-renderer/themes/github'),
+      darkTheme: {
+        ...require('prism-react-renderer/themes/vsDark'),
+        plain: {
+          color: '#D4D4D4',
+          backgroundColor: '#242526',
+        },
+      },
       additionalLanguages: ['docker'],
     },
     navbar: {

@@ -3,6 +3,7 @@ id: additionalRequest
 title: AdditionalRequest
 ---
 
+<<<<<<< HEAD
 :::info
 このページの例は Fastify で書かれていますが、Express でも同じ機能が有効です。
 
@@ -11,6 +12,8 @@ Express での例を追加するプルリクエストも歓迎しています！
 
 ---
 
+=======
+>>>>>>> upstream/master
 ```ts title='controller.ts / hooks.ts'
 export type AdditionalRequest = Pick<FastifyRequest, 'cookies'> & {
   setCookie: (...args: Parameters<FastifyReply['setCookie']>) => void;
@@ -18,16 +21,38 @@ export type AdditionalRequest = Pick<FastifyRequest, 'cookies'> & {
 };
 ```
 
+<<<<<<< HEAD
 Frourio は、controller.ts と hooks.ts からエクスポートされた `AdditionalRequest` 型で `FastifyRequest` または `Request` 型を拡張します。
 
 `controller.ts` で定義した場合、現在の階層でのみ反映されます。
 `hooks.ts` で定義した場合、現在と _配下の_ 階層に反映されます。
 
 ## フックとコントローラーの橋渡し {#bridging-hooks-and-controllers}
+=======
+Using `AdditionalRequest`, you can extend the `FastifyRequest` or `Request` types.
+This allows you to keep information between multiple Hooks and from Hooks to the Handler.
+
+Frourio automatically extend the arguments of the Handler and Hooks with `AdditionalRequest` defined in `controller.ts` or `hooks.ts`.
+
+- **Controller-level**: Affects only the current endpoint. Defined in `controller.ts`.
+- **Directory-level**: Affects the current endpoint **and the endpoints under it**. Defined in `hooks.ts`.
+
+:::info
+The examples on this page are written with Fastify, but the same features are valid with Express.
+
+Pull requests to add examples with Express are welcome!
+:::
+
+## Bridging Hooks and the Handler {#bridging-hooks-and-the-handler}
+>>>>>>> upstream/master
 
 フックとコントローラーとの間で値を共有するには、`AdditionalRequest` で拡張して値を格納します。
 
+<<<<<<< HEAD
 ### 例 {#bridging-hooks-and-controllers-example}
+=======
+### Example {#bridging-hooks-and-the-handler-example}
+>>>>>>> upstream/master
 
 ```ts title='controller.ts'
 import { defineController, defineHooks } from './$relay';
@@ -52,9 +77,15 @@ export default defineController(() => ({
 
 ## プラグインによる型の拡張の反映 {#relaying-type-extended-by-plugins}
 
+<<<<<<< HEAD
 **コントローラーの第一引数は** `@fastify/cookie` などの **プラグインによる型の拡張を反映しません。**これは FastifyRequest ではなく、frourio によって作られたものだからです。
 
 拡張された内容にアクセスしたい場合、AdditinalRequest で拡張しフックで値を格納する必要があります。
+=======
+**The first argument of the Handler method does not reflect extensions by plugins** such as `@fastify/cookie` because it is not a `FastifyRequest` but created by Frourio.
+
+If you want to access extended content, you must extend it with `AdditinalRequest` and set the value with Hooks.
+>>>>>>> upstream/master
 
 ### 例 {#relaying-type-extended-by-plugins-example}
 

@@ -8,17 +8,26 @@ import TabItem from '@theme/TabItem';
 
 ## Frourio におけるライフサイクル {#lifecycle-in-frourio}
 
+<<<<<<< HEAD
 Frourio と frourio-express のどちらも、fastify に似た形式のフックを提供しています。
+=======
+Both frourio and frourio-express provide Hooks that take a form similar to fastify.
+>>>>>>> upstream/master
 
 全体のライフサイクルは下図のようになっていて、`onRequest`, `preParsing`, `preValidation`, `preHandler` などのフックを定義できます。
 
 <div style={{ textAlign: 'center' }}>
+<<<<<<< HEAD
   <img src="/img/lifecycle.svg" alt='Frourio におけるライフサイクル' style={{ maxWidth: '300px' }} />
+=======
+  <img src="/img/docs/lifecycle.svg" alt='Lifecycle of Frourio' width='840px' height='1800px' style={{ maxWidth: '100%', maxHeight: '800px' }} />
+>>>>>>> upstream/master
 
 _Ref. [Lifecycle - Fastify](https://www.fastify.io/docs/latest/Reference/Lifecycle/)_
 
 </div>
 
+<<<<<<< HEAD
 ## 2 種類のフック {#two-types-of-hooks}
 
 Frourio は、**コントローラーレベル フック** と **ディレクトリレベル フック** の 2 種類のフックを提供しています。
@@ -36,6 +45,39 @@ Frourio は、**コントローラーレベル フック** と **ディレクト
 - **ディレクトリレベル フック**: 目的のディレクトリの `hooks.ts` で定義します
 
 ### `defineHooks` 関数 {#function-definehooks}
+=======
+---
+
+:::tip Looking for docs on how to define hooks?
+
+The definition of Hooks can be found on the Routing page. See the following links for a reference on `defineController()` and `defineHooks()`.
+
+- [Controller-level (`defineController()`)](/docs/reference/routing#controller-level)
+- [Directory-level (`defineHooks()`)](/docs/reference/routing#directory-level-hooks)
+
+:::
+
+## Object `ServerHooks` {#serverhooks}
+
+<code>
+  {'{\n  [(Hooks Name)]: '}
+  <a href="#hookshandler">HooksHandler</a>
+  {' or '}
+  <a href="#hookshandler">HooksHandler</a>[]
+  {',\n}'}
+</code>
+
+An object whose keys are the same as the names of hooks and whose values are [`HooksHandler`](#hookshandler) or <code><a href="#hookshandler">HooksHandler</a>[]</code>.
+
+Available names of hooks:
+
+- `onRequest`
+- `preParsing`
+- `preValidation`
+- `preHandler`
+
+## Function `HooksHandler` {#hookshandler}
+>>>>>>> upstream/master
 
 <Tabs
   groupId='base-framework'
@@ -47,6 +89,7 @@ Frourio は、**コントローラーレベル フック** と **ディレクト
 >
 <TabItem value="fastify">
 
+<<<<<<< HEAD
 #### 引数の型 {#definehooks-argument-type}
 
 - function `(fastify: FastifyInstance) => Hooks`
@@ -55,6 +98,9 @@ Frourio は、**コントローラーレベル フック** と **ディレクト
 ### フックハンドラ {#hooks-handler}
 
 #### 引数の型 {#hooks-handler-argument-type}
+=======
+### Argument Type {#hooks-handler-argument-type}
+>>>>>>> upstream/master
 
 - `request` : [`FastifyRequest`](https://www.fastify.io/docs/latest/Reference/TypeScript/#request) & [`AdditinalRequest`](/docs/reference/additionalRequest)
 - `reply` : [`FastifyReply`](https://www.fastify.io/docs/latest/Reference/TypeScript/#reply)
@@ -71,6 +117,7 @@ _ref. [Hooks - Fastify](https://www.fastify.io/docs/latest/Reference/Hooks/)_
 </TabItem>
 <TabItem value="express">
 
+<<<<<<< HEAD
 #### 引数の型 {#definehooks-argument-type}
 
 - function `(app: Express) => Hooks`
@@ -79,6 +126,9 @@ _ref. [Hooks - Fastify](https://www.fastify.io/docs/latest/Reference/Hooks/)_
 ### フックハンドラ {#hooks-handler}
 
 #### 引数の型 {#hooks-handler-argument-type}
+=======
+### Argument Type {#hooks-handler-argument-type}
+>>>>>>> upstream/master
 
 - `req` : [`Request`](https://expressjs.com/ja/api.html#req) & [`AdditinalRequest`](/docs/reference/additionalRequest)
 - `res` : [`Response`](http://expressjs.com/ja/api.html#res)

@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { ComponentType, SVGProps } from 'react';
 import styles from '../pages/styles.module.css';
 
-const setupSteps = [
+import NextLogo from '../assets/logos/next.svg';
+import NuxtLogo from '../assets/logos/nuxt.svg';
+import FastifyLogo from '../assets/logos/fastify.svg';
+import ExpressLogo from '../assets/logos/express.svg';
+import PrismaLogo from '../assets/logos/prisma.svg';
+import TypeormLogo from '../assets/logos/typeorm.svg';
+import MysqlLogo from '../assets/logos/mysql.svg';
+import PostgresqlLogo from '../assets/logos/postgresql.svg';
+import JestLogo from '../assets/logos/jest.svg';
+import GithubActionsLogo from '../assets/logos/github-actions.svg';
+import VercelLogo from '../assets/logos/vercel.svg';
+import NetlifyLogo from '../assets/logos/netlify.svg';
+
+const setupSteps: { text: string; icons: ComponentType<SVGProps<SVGSVGElement>>[] }[] = [
   {
+<<<<<<< HEAD
     text: 'フロントエンドフレームワークを選択',
     icons: ['next', 'nuxt', 'sapperIcon'],
   },
@@ -25,6 +39,30 @@ const setupSteps = [
   {
     text: 'デプロイ先を選択',
     icons: ['vercel', 'netlify'],
+=======
+    text: 'Select Front-end Framework',
+    icons: [NextLogo, NuxtLogo],
+  },
+  {
+    text: 'Select Back-end Framework',
+    icons: [FastifyLogo, ExpressLogo],
+  },
+  {
+    text: 'Select O/R mapper',
+    icons: [PrismaLogo, TypeormLogo],
+  },
+  {
+    text: 'Select DataBase',
+    icons: [MysqlLogo, PostgresqlLogo],
+  },
+  {
+    text: 'Setup CI',
+    icons: [JestLogo, GithubActionsLogo],
+  },
+  {
+    text: 'Select Deploy Server',
+    icons: [VercelLogo, NetlifyLogo],
+>>>>>>> upstream/master
   },
 ];
 
@@ -38,8 +76,8 @@ function HowtoSetup() {
           <div>
             <p className={styles.stepText}>{step.text}</p>
             <div className={styles.stepIconsWrapper}>
-              {step.icons.map((icon, index) => (
-                <img key={index} className={styles.stepIcon} src={`img/${icon}.png`} />
+              {step.icons.map((IconElm, index) => (
+                <IconElm key={index} className={styles.stepIcon} />
               ))}
             </div>
           </div>

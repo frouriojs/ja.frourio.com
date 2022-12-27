@@ -16,12 +16,22 @@ Frourio が対応しているクライアントとサーバーのフレームワ
 言うなれば、私たちは「２つ」の TypeScript を書かざるを得なかったのです。
 そしてブラウザとサーバーを用いたテストに多くの時間を費やしてきました。
 
+<<<<<<< HEAD
 ![２つの TypeScript](/img/TwoTS.svg)
+=======
+![Two TypeScript](/img/docs/TwoTS.svg#gh-light-mode-only)
+![Two TypeScript](/img/docs/TwoTS-dark.svg#gh-dark-mode-only)
+>>>>>>> upstream/master
 
 しかし frourio を用いることで、型を通じてそれらを「接続」することができます。
 Frourio は「接続」された TypeScript で開発体験を大幅に改善します。
 
+<<<<<<< HEAD
 ![１つの TypeScript](/img/OneTS.svg)
+=======
+![One TypeScript](/img/docs/OneTS.svg#gh-light-mode-only)
+![One TypeScript](/img/docs/OneTS-dark.svg#gh-dark-mode-only)
+>>>>>>> upstream/master
 
 ---
 
