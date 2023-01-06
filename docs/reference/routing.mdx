@@ -1,33 +1,33 @@
 ---
 id: routing
-title: Routing
+title: ルーティング
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-In frourio, controllers are defined using file-system based API routing, similar to Next.js.
-Definition methods can be broadly classified into controller-level and directory-level, depending on the scope of the effect.
+Frourio では、Next.js のようなファイルシステムに基づいた API ルーティングを用いてコントローラーを定義します。
+定義方法は、影響する範囲に基づいて大まかにコントローラーレベルとディレクトリレベルの 2 つに分類できます。
 
-The level used to define each controller element is different, but some elements can be defined at both levels.
-The following table summarizes them.
+定義に用いるレベルはコントローラーの要素によって異なりますが、一部の要素では両方のレベルに定義することができます。
+以下の表はこれをまとめたものです。
 
-| Elements                                         |                                        Controller-level                                         |                              Directory-level                               |
-| ------------------------------------------------ | :---------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
-| [**Handler**](/docs/reference/handler)           |                       <span class="badge badge--success">Supported</span>                       |                                    :x:                                     |
-| [**Hooks**](/docs/reference/hooks)               |                       <span class="badge badge--success">Supported</span>                       |            <span class="badge badge--success">Supported</span>             |
-| [**Validators**](/docs/reference/validation/zod) | <span class="badge badge--warning">Restricted</span> &ndash; Only `body`, `headers` and `query` | <span class="badge badge--warning">Restricted</span> &ndash; Only `params` |
-| [**Schemas**](/docs/reference/responseSchema)    |                       <span class="badge badge--success">Supported</span>                       |                                    :x:                                     |
+| 要素                                               |                                     コントローラーレベル                                     |                            ディレクトリレベル                            |
+| -------------------------------------------------- | :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------: |
+| [**ハンドラー**](/docs/reference/handler)          |                        <span class="badge badge--success">有効</span>                        |                                   :x:                                    |
+| [**フック**](/docs/reference/hooks)                |                        <span class="badge badge--success">有効</span>                        |              <span class="badge badge--success">有効</span>              |
+| [**バリデーター**](/docs/reference/validation/zod) | <span class="badge badge--warning">制限つき</span> &ndash; `body` と `headers`、`query` のみ | <span class="badge badge--warning">制限つき</span> &ndash; `params` のみ |
+| [**スキーマ**](/docs/reference/responseSchema)     |                        <span class="badge badge--success">有効</span>                        |                                   :x:                                    |
 
-## Controller-level {#controller-level}
+## コントローラーレベル {#controller-level}
 
-If the element is defined at controller-level, it affects only the current endpoint.
+要素がコントローラーレベルで定義された場合、現在のエンドポイントのみに影響します。
 
-**Difinition Method** : `defineController()` in `controller.ts`
+**定義方法** : `controller.ts` 内で `defineController()` を用いる
 
 :::caution
 
-`defineHooks()` and `defineResponseSchema()` are deprecated after `frourio` and `frourio-express` version `0.31.0`.
+`defineHooks()` と `defineResponseSchema()` は `frourio` および `frourio-express` バージョン `0.31.0` 以降で非推奨となりました。
 
 :::
 
@@ -53,9 +53,9 @@ export default defineController(() => ({
 }));
 ```
 
-### Function `defineController()` {#definecontroller}
+### 関数 `defineController()` {#definecontroller}
 
-#### Argument Type {#definecontoller-argument-type}
+#### 引数の型 {#definecontoller-argument-type}
 
 <Tabs
   groupId='base-framework'
@@ -69,27 +69,27 @@ export default defineController(() => ({
 
 - function `(fastify: FastifyInstance) => ServerMethods`
   - [`FastifyInstance`](https://www.fastify.io/docs/latest/Reference/TypeScript/#fastifyfastifyinstancerawserver-rawrequest-requestgeneric-logger)
-  - `ServerMethods` : an object whose keys are the same as `Methods` and whose values are [`ServerMethodHandler`](#servermethodhandler).
+  - `ServerMethods` : key が `Methods` と等しく、value が [`ServerMethodHandler`](#servermethodhandler) であるオブジェクト。
 
 </TabItem>
 <TabItem value="express">
 
 - function `(app: Express) => ServerMethods`
   - [`Express`](https://expressjs.com/en/4x/api.html)
-  - `ServerMethods` : an object whose keys are the same as `Methods` and whose values are [`ServerMethodHandler`](#servermethodhandler).
+  - `ServerMethods` : key が `Methods` と等しく、value が [`ServerMethodHandler`](#servermethodhandler) であるオブジェクト。
 
 </TabItem>
 </Tabs>
 
-#### Return Type {#definecontoller-return-type}
+#### 戻り値の型 {#definecontoller-return-type}
 
-- object `ServerMethods`
+- オブジェクト `ServerMethods`
 
-### Object `ServerMethodHandler` {#servermethodhandler}
+### オブジェクト `ServerMethodHandler` {#servermethodhandler}
 
 <code>
   {'{\n  validators?: '}
-  <a href="/docs/reference/validation/zod#controller-level">(Controller-level Validators)</a>
+  <a href="/docs/reference/validation/zod#controller-level">(コントローラーレベル バリデーター)</a>
   {',\n  schemas?: { response?: { [(HTTP Status Code)]: '}
   <a href="https://github.com/fastify/fast-json-stringify/blob/master/types/index.d.ts">Schema</a>
   {' } },\n  hooks?: '}
@@ -101,14 +101,14 @@ export default defineController(() => ({
   {',\n}'}
 </code>
 
-`validators`, `schemas` and `hooks` can be omitted.
-If only `handler` is defined, [`ServerHandler`](/docs/reference/handler#serverhandler) or <code><a href="/docs/reference/handler#serverhandler">ServerHandler</a>Promise</code> can be passed directly instead of the object.
+`validators` と `schemas`、`hooks` は省略できます。
+`handler` のみを定義する場合、オブジェクトの代わりに [`ServerHandler`](/docs/reference/handler#serverhandler) または <code><a href="/docs/reference/handler#serverhandler">ServerHandler</a>Promise</code> を直接渡すことができます。
 
-## Directory-level Hooks {#directory-level-hooks}
+## ディレクトリレベル フック {#directory-level-hooks}
 
-If the element is defined at directory-level, it affects the current endpoint **and the endpoints under it**.
+要素がディレクトリレベルで定義された場合、現在のエンドポイントと**その下にあるエンドポイント全て**に影響します。
 
-**Difinition Method** : `defineHooks()` in `hooks.ts`
+**定義方法** : `hooks.ts` で `defineHooks()` を用いる
 
 ```ts title='hooks.ts'
 import { defineHooks } from './$relay';
@@ -121,7 +121,7 @@ export default defineHooks(() => ({
 }));
 ```
 
-### Function `defineHooks()` {#definehooks}
+### 関数 `defineHooks()` {#definehooks}
 
 <Tabs
   groupId='base-framework'
@@ -133,29 +133,29 @@ export default defineHooks(() => ({
 >
 <TabItem value="fastify">
 
-##### Argument Type {#definehooks-argument-type}
+##### 引数の型 {#definehooks-argument-type}
 
 - function `(fastify: FastifyInstance) => ServerHooks`
-  - `Hooks` : An object having the hooks name as keys and the handler functions (or its array) as values.
+  - `Hooks` : フックの名前を key とし、ハンドラ関数（またはその配列）を value とするオブジェクト
 
-##### Return Type
+##### 戻り値の型
 
-- object `ServerHooks`
+- `ServerHooks` オブジェクト
 
 </TabItem>
 <TabItem value="express">
 
-#### Argument Type {#definehooks-argument-type}
+#### 引数の型 {#definehooks-argument-type}
 
 - function `(app: Express) => ServerHooks`
-  - `Hooks` : An object having the hooks name as keys and the handler functions (or its array) as values.
+  - `Hooks` : フックの名前を key とし、ハンドラ関数（またはその配列）を value とするオブジェクト
 
 </TabItem>
 </Tabs>
 
-## Directory-level Validators {#directory-level-validators}
+## ディレクトリレベル バリデーター {#directory-level-validators}
 
-**Difinition Method** : `defineValidators()` in `validators.ts`
+**定義方法** : `validators.ts` で `defineValidators()` を用いる
 
 ```ts title='validators.ts'
 import { defineValidators } from './$relay';
@@ -166,4 +166,4 @@ export default defineValidators(() => ({
 }));
 ```
 
-See [the Zod page](/docs/reference/validation/zod#definevalidators) for more information on `defineValidators()`.
+`defineValidators()` についての詳しい情報は、[Zod ページ](/docs/reference/validation/zod#definevalidators)を参照してください。

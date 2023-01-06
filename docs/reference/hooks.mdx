@@ -8,76 +8,48 @@ import TabItem from '@theme/TabItem';
 
 ## Frourio におけるライフサイクル {#lifecycle-in-frourio}
 
-<<<<<<< HEAD
 Frourio と frourio-express のどちらも、fastify に似た形式のフックを提供しています。
-=======
-Both frourio and frourio-express provide Hooks that take a form similar to fastify.
->>>>>>> upstream/master
 
 全体のライフサイクルは下図のようになっていて、`onRequest`, `preParsing`, `preValidation`, `preHandler` などのフックを定義できます。
 
 <div style={{ textAlign: 'center' }}>
-<<<<<<< HEAD
-  <img src="/img/lifecycle.svg" alt='Frourio におけるライフサイクル' style={{ maxWidth: '300px' }} />
-=======
-  <img src="/img/docs/lifecycle.svg" alt='Lifecycle of Frourio' width='840px' height='1800px' style={{ maxWidth: '100%', maxHeight: '800px' }} />
->>>>>>> upstream/master
+  <img src="/img/docs/lifecycle.svg" alt='Frourio におけるライフサイクル' width='840px' height='1800px' style={{ maxWidth: '100%', maxHeight: '800px' }} />
 
 _Ref. [Lifecycle - Fastify](https://www.fastify.io/docs/latest/Reference/Lifecycle/)_
 
 </div>
 
-<<<<<<< HEAD
-## 2 種類のフック {#two-types-of-hooks}
-
-Frourio は、**コントローラーレベル フック** と **ディレクトリレベル フック** の 2 種類のフックを提供しています。
-
-- **コントローラーレベル フック**: 現在の階層でのみ呼ばれます
-- **ディレクトリレベル フック**: 現在と _配下の_ 階層で呼ばれます
-
-もし両方の種類のフックが同時に呼ばれる場合、**ディレクトリレベル フック** が先に呼ばれます。
-
-## フックを定義する {#define-hooks}
-
-フックを定義するには、`./$relay.ts` でエクスポートされた `defineHooks` 関数を使用します。
-
-- **コントローラーレベル フック**: `controller.ts` で定義します
-- **ディレクトリレベル フック**: 目的のディレクトリの `hooks.ts` で定義します
-
-### `defineHooks` 関数 {#function-definehooks}
-=======
 ---
 
-:::tip Looking for docs on how to define hooks?
+:::tip フックの定義方法を探していますか？
 
-The definition of Hooks can be found on the Routing page. See the following links for a reference on `defineController()` and `defineHooks()`.
+フックの定義方法はルーティングページにあります。以下のリンクから `defineController()` や `defineHooks()` について参照してください。
 
-- [Controller-level (`defineController()`)](/docs/reference/routing#controller-level)
-- [Directory-level (`defineHooks()`)](/docs/reference/routing#directory-level-hooks)
+- [コントローラーレベル (`defineController()`)](/docs/reference/routing#controller-level)
+- [ディレクトリレベル (`defineHooks()`)](/docs/reference/routing#directory-level-hooks)
 
 :::
 
-## Object `ServerHooks` {#serverhooks}
+## オブジェクト `ServerHooks` {#serverhooks}
 
 <code>
-  {'{\n  [(Hooks Name)]: '}
+  {'{\n  [(フックの名称)]: '}
   <a href="#hookshandler">HooksHandler</a>
   {' or '}
   <a href="#hookshandler">HooksHandler</a>[]
   {',\n}'}
 </code>
 
-An object whose keys are the same as the names of hooks and whose values are [`HooksHandler`](#hookshandler) or <code><a href="#hookshandler">HooksHandler</a>[]</code>.
+フックの名称を key とし、[`HooksHandler`](#hookshandler) または <code><a href="#hookshandler">HooksHandler</a>[]</code> を value とするオブジェクト。
 
-Available names of hooks:
+有効なフックの名称:
 
 - `onRequest`
 - `preParsing`
 - `preValidation`
 - `preHandler`
 
-## Function `HooksHandler` {#hookshandler}
->>>>>>> upstream/master
+## 関数 `HooksHandler` {#hookshandler}
 
 <Tabs
   groupId='base-framework'
@@ -89,18 +61,7 @@ Available names of hooks:
 >
 <TabItem value="fastify">
 
-<<<<<<< HEAD
-#### 引数の型 {#definehooks-argument-type}
-
-- function `(fastify: FastifyInstance) => Hooks`
-  - `Hooks` : フック名を key とし、ハンドラ関数（またはその配列）を value とするオブジェクト
-
-### フックハンドラ {#hooks-handler}
-
-#### 引数の型 {#hooks-handler-argument-type}
-=======
-### Argument Type {#hooks-handler-argument-type}
->>>>>>> upstream/master
+### 引数の型 {#hooks-handler-argument-type}
 
 - `request` : [`FastifyRequest`](https://www.fastify.io/docs/latest/Reference/TypeScript/#request) & [`AdditinalRequest`](/docs/reference/additionalRequest)
 - `reply` : [`FastifyReply`](https://www.fastify.io/docs/latest/Reference/TypeScript/#reply)
@@ -117,18 +78,7 @@ _ref. [Hooks - Fastify](https://www.fastify.io/docs/latest/Reference/Hooks/)_
 </TabItem>
 <TabItem value="express">
 
-<<<<<<< HEAD
-#### 引数の型 {#definehooks-argument-type}
-
-- function `(app: Express) => Hooks`
-  - `Hooks` : フック名を key とし、ハンドラ関数（またはその配列）を value とするオブジェクト
-
-### フックハンドラ {#hooks-handler}
-
-#### 引数の型 {#hooks-handler-argument-type}
-=======
-### Argument Type {#hooks-handler-argument-type}
->>>>>>> upstream/master
+### 引数の型 {#hooks-handler-argument-type}
 
 - `req` : [`Request`](https://expressjs.com/ja/api.html#req) & [`AdditinalRequest`](/docs/reference/additionalRequest)
 - `res` : [`Response`](http://expressjs.com/ja/api.html#res)

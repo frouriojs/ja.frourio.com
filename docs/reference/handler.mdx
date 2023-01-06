@@ -1,6 +1,6 @@
 ---
 id: handler
-title: Handler
+title: ハンドラー
 ---
 
 import Tabs from '@theme/Tabs';
@@ -36,36 +36,36 @@ export default defineController(() => ({
 }));
 ```
 
-A handler is a function that takes a request as an argument and returns a response as a return value.
-Handlers can only be defined at the controller-level.
+ハンドラーは、リクエストを引数としレスポンスを戻り値として返す関数です。
+ハンドラーはコントローラーレベルでのみ定義できます。
 
 ---
 
-:::tip Looking for docs on how to define the handler?
+:::tip ハンドラーの定義方法を探していますか？
 
-The definition of the handler can be found on the Routing page. See the following links for a reference on `defineController()`.
+ハンドラーの定義方法はルーティングページにあります。以下のリンクから `defineController()` について参照してください。
 
-- [Controller-level (`defineController()`)](/docs/reference/routing#controller-level)
+- [コントローラーレベル (`defineController()`)](/docs/reference/routing#controller-level)
 
 :::
 
-## Function `ServerHandler` {#serverhandler}
+## 関数 `ServerHandler` {#serverhandler}
 
-### Argument Type {#serverhandler-argument-type}
+### 引数の型 {#serverhandler-argument-type}
 
-- object `RequestParams` & [`AdditinalRequest`](/docs/reference/additionalRequest)
+- オブジェクト `RequestParams` & [`AdditinalRequest`](/docs/reference/additionalRequest)
   - `query` : `query`
   - `headers` : `reqHeaders`
   - `params` : URL Params
   - `body` : `reqBody`
 
-### Return Type {#controllermethods-return-type}
+### 戻り値の型 {#controllermethods-return-type}
 
-- object `ServerResponse` | promise `Promise<ServerResponse>`
+- オブジェクト `ServerResponse` | promise `Promise<ServerResponse>`
   - `status` : `status`
   - `body` : `resBody`
   - `headers` : `resHeaders`
 
-The types of `RequestParams` and `ServerResponse` are determined by API type definitions.
+`RequestParams` 型と `ServerResponse` 型は API 型定義に基づいて決定されます。
 
-If this is included in a Promise using async, it becomes the <code>ServerHandler<b>Promise</b></code>.
+async を用いて Promise となった場合、<code>ServerHandler<b>Promise</b></code> になります。
