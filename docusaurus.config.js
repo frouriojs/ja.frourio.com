@@ -15,21 +15,13 @@ module.exports = {
       { name: 'twitter:card', content: 'summary_large_image' },
       {
         name: 'description',
-<<<<<<< HEAD
-        content: 'Frourio は TypeScript のためのフルスタックフレームワークです。',
-      },
-      {
-        property: 'og:description',
-        content: 'Frourio は TypeScript のためのフルスタックフレームワークです。',
-=======
         content:
-          'Frourio is a CLI tool that enables static type checking by Typescript for communication between client-side and server-side.',
+          'Frourio はクライアントとサーバーとの間の通信を TypeScript を用いて静的型検査できるようにする CLI ツールです。',
       },
       {
         property: 'og:description',
         content:
-          'Frourio is a CLI tool that enables static type checking by Typescript for communication between client-side and server-side.',
->>>>>>> upstream/master
+          'Frourio はクライアントとサーバーとの間の通信を TypeScript を用いて静的型検査できるようにする CLI ツールです。',
       },
     ],
     colorMode: {
