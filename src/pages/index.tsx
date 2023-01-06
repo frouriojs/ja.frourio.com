@@ -25,16 +25,8 @@ function Home() {
           <p className={styles.heroTitle}>コマンド一発で</p>
           <p className={clsx(styles.heroTitle, styles.heroTitleBold)}>必要なのは TypeScript だけ</p>
           <div className={styles.buttons}>
-<<<<<<< HEAD
-            <Link
-              className={clsx('button button--primary button--lg', styles.getStarted)}
-              to={useBaseUrl('docs/')}
-            >
-              はじめる
-=======
             <Link className="button button--primary button--lg" to={useBaseUrl('docs/')}>
-              Get Started
->>>>>>> upstream/master
+              はじめる
             </Link>
             <Link
               className={clsx(
@@ -122,16 +114,8 @@ function Home() {
 
           <div className={clsx('text--center', styles.feature)}>
             <div className="container">
-<<<<<<< HEAD
               <h2>TypeScript 製で最速のフレームワーク</h2>
-              {Chart && (
-                <Chart options={chartOptions} series={chartSeries} type="bar" height={280} />
-              )}
-
-=======
-              <h2>The fastest TypeScript framework</h2>
               <BenchmarkChart />
->>>>>>> upstream/master
               <div className={clsx('text--center', styles.feature)}>
                 <Link
                   className={clsx('button button--primary button--lg', styles.getStarted)}
