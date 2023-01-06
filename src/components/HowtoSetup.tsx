@@ -16,53 +16,28 @@ import NetlifyLogo from '../assets/logos/netlify.svg';
 
 const setupSteps: { text: string; icons: ComponentType<SVGProps<SVGSVGElement>>[] }[] = [
   {
-<<<<<<< HEAD
     text: 'フロントエンドフレームワークを選択',
-    icons: ['next', 'nuxt', 'sapperIcon'],
-  },
-  {
-    text: 'バックエンドフレームワークを選択',
-    icons: ['fastify', 'express'],
-  },
-  {
-    text: 'ORM を選択',
-    icons: ['prisma', 'typeorm'],
-  },
-  {
-    text: 'データベースを選択',
-    icons: ['mysql', 'postgres'],
-  },
-  {
-    text: 'CI を選択',
-    icons: ['jest', 'githubactions'],
-  },
-  {
-    text: 'デプロイ先を選択',
-    icons: ['vercel', 'netlify'],
-=======
-    text: 'Select Front-end Framework',
     icons: [NextLogo, NuxtLogo],
   },
   {
-    text: 'Select Back-end Framework',
+    text: 'バックエンドフレームワークを選択',
     icons: [FastifyLogo, ExpressLogo],
   },
   {
-    text: 'Select O/R mapper',
+    text: 'ORM を選択',
     icons: [PrismaLogo, TypeormLogo],
   },
   {
-    text: 'Select DataBase',
+    text: 'データベースを選択',
     icons: [MysqlLogo, PostgresqlLogo],
   },
   {
-    text: 'Setup CI',
+    text: 'CI を選択',
     icons: [JestLogo, GithubActionsLogo],
   },
   {
-    text: 'Select Deploy Server',
+    text: 'デプロイ先を選択',
     icons: [VercelLogo, NetlifyLogo],
->>>>>>> upstream/master
   },
 ];
 
