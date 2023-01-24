@@ -1,0 +1,40 @@
+---
+id: responseSchema
+title: レスポンススキーマ
+---
+
+Fastify は json スキーマが定義された場合に `JSON.stringfy()` の代わりに [`fast-json-stringfy`](https://www.npmjs.com/package/fast-json-stringify) を用いてレスポンスをシリアライズします。
+このスキーマは [JSON Schema Draft 7](https://json-schema.org/specification-links.html#draft-7) である必要があります。
+
+Frourio においては、[`ServerMethodHandler`](/docs/reference/routing#servermethodhandler) 内の `schamas` として定義することで、Fastify (`frourio`) だけでなく **Express (`frourio-express`) においても**シリアライズを高速にできます。。
+
+レスポンススキーマの定義方法については [Fastify ドキュメント](https://www.fastify.io/docs/latest/Reference/Validation-and-Serialization/#serialization)を参照してください。
+
+```ts title='controller.ts'
+import { defineController } from './$relay';
+
+export default defineController(() => ({
+  get: () => ({ status: 200, body: 'Hello' }),
+  post: {
+    validators: {
+      query: z.object({ ... }),
+      body: z.object({ ... }),
+    },
+    // highlight-start
+    schemas: {
+      response: {
+        201: {
+          type: 'object',
+          properties: { id: { type: 'number' }, port: { type: 'string' } }
+        }
+      }
+    },
+    // highlight-end
+    hooks: {
+      preValidation: [],
+      preHandler: (req, _, done) => { ...; done(); },
+    },
+    handler: ({ body }) => ({ status: 201, body: { ... } }),
+  },
+}));
+```

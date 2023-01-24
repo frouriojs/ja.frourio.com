@@ -3,14 +3,6 @@ id: additionalRequest
 title: AdditionalRequest
 ---
 
-:::info
-このページの例は Fastify で書かれていますが、Express でも同じ機能が有効です。
-
-Express での例を追加するプルリクエストも歓迎しています！
-:::
-
----
-
 ```ts title='controller.ts / hooks.ts'
 export type AdditionalRequest = Pick<FastifyRequest, 'cookies'> & {
   setCookie: (...args: Parameters<FastifyReply['setCookie']>) => void;
@@ -18,16 +10,25 @@ export type AdditionalRequest = Pick<FastifyRequest, 'cookies'> & {
 };
 ```
 
-Frourio は、controller.ts と hooks.ts からエクスポートされた `AdditionalRequest` 型で `FastifyRequest` または `Request` 型を拡張します。
+`AdditionalRequest` を使用することで、`FastifyRequest` または `Request` 型を拡張できます。
+これにより、数々のフックのとハンドラーとの間で情報を保持できます。
 
-`controller.ts` で定義した場合、現在の階層でのみ反映されます。
-`hooks.ts` で定義した場合、現在と _配下の_ 階層に反映されます。
+Frourio は `controller.ts` や `hooks.ts` に定義されている `AdditionalRequest` を用いて自動的にハンドラーとフックの引数を拡張します。
 
-## フックとコントローラーの橋渡し {#bridging-hooks-and-controllers}
+- **コントローラーレベル**: 現在のエンドポイントにのみ影響します。`controller.ts` に定義されます。
+- **ディレクトリレベル**: 現在のエンドポイントと**その下にあるエンドポイント全て**に影響します。`hooks.ts` に定義されます。
 
-フックとコントローラーとの間で値を共有するには、`AdditionalRequest` で拡張して値を格納します。
+:::info
+このページの例は Fastify で書かれていますが、Express でも同じ機能が有効です。
 
-### 例 {#bridging-hooks-and-controllers-example}
+Express での例を追加するプルリクエストも歓迎しています！
+:::
+
+## フックとコントローラーの橋渡し {#bridging-hooks-and-the-handler}
+
+フックとハンドラーとの間で値を共有するには、`AdditionalRequest` で拡張して値を格納します。
+
+### 例 {#bridging-hooks-and-the-handler-example}
 
 ```ts title='controller.ts'
 import { defineController, defineHooks } from './$relay';
@@ -52,7 +53,7 @@ export default defineController(() => ({
 
 ## プラグインによる型の拡張の反映 {#relaying-type-extended-by-plugins}
 
-**コントローラーの第一引数は** `@fastify/cookie` などの **プラグインによる型の拡張を反映しません。**これは FastifyRequest ではなく、frourio によって作られたものだからです。
+**ハンドラーの第一引数は** `@fastify/cookie` などの **プラグインによる型の拡張を反映しません。**これは FastifyRequest ではなく、frourio によって作られたものだからです。
 
 拡張された内容にアクセスしたい場合、AdditinalRequest で拡張しフックで値を格納する必要があります。
 

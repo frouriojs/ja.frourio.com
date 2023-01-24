@@ -1,0 +1,71 @@
+---
+id: handler
+title: ハンドラー
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+```ts title='controller.ts'
+import { defineController } from './$relay';
+
+export default defineController(() => ({
+  // highlight-start
+  get: () => ({ status: 200, body: 'Hello' }),
+  // highlight-end
+  post: {
+    validators: {
+      query: z.object({ ... }),
+      body: z.object({ ... }),
+    },
+    schemas: {
+      response: { 201: { type: 'object', properties: { ... } } },
+    },
+    hooks: {
+      preValidation: [],
+      preHandler: (req, _, done) => { ...; done(); },
+    },
+    // highlight-start
+    handler: async ({ query: { foo }, params: { bar }, body }) => {
+      const baz = await createBaz(foo, bar, body);
+      if (!baz) return { status: 400 };
+      return { status: 201, body: baz };
+    },
+    // highlight-end
+  },
+}));
+```
+
+ハンドラーは、リクエストを引数としレスポンスを戻り値として返す関数です。
+ハンドラーはコントローラーレベルでのみ定義できます。
+
+---
+
+:::tip ハンドラーの定義方法を探していますか？
+
+ハンドラーの定義方法はルーティングページにあります。以下のリンクから `defineController()` について参照してください。
+
+- [コントローラーレベル (`defineController()`)](/docs/reference/routing#controller-level)
+
+:::
+
+## 関数 `ServerHandler` {#serverhandler}
+
+### 引数の型 {#serverhandler-argument-type}
+
+- オブジェクト `RequestParams` & [`AdditinalRequest`](/docs/reference/additionalRequest)
+  - `query` : `query`
+  - `headers` : `reqHeaders`
+  - `params` : URL Params
+  - `body` : `reqBody`
+
+### 戻り値の型 {#controllermethods-return-type}
+
+- オブジェクト `ServerResponse` | promise `Promise<ServerResponse>`
+  - `status` : `status`
+  - `body` : `resBody`
+  - `headers` : `resHeaders`
+
+`RequestParams` 型と `ServerResponse` 型は API 型定義に基づいて決定されます。
+
+async を用いて Promise となった場合、<code>ServerHandler<b>Promise</b></code> になります。

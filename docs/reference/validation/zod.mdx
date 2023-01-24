@@ -32,9 +32,15 @@ Frourio は **コントローラーレベル バリデーター** と **ディ�
 
 ## コントローラーレベル {#controller-level}
 
-`validator` と `handler` を key に持つ**オブジェクトが `defineController` に** [`ServerMethodHandler`](/docs/reference/controller#object-servermethodhandler) として**渡されると**、Frourio は [`ServerHandler`](/docs/reference/controller#function-serverhandler) の引数 `Requestparams` を検証します。
+`defineController()` については[ルーティングページ](/docs/reference/routing#controller-level)を参照してください。
 
-`valiator` は `RequestParams` と同じ key を持ち、**zod オブジェクトスキーマ** (`z.object()`) を value に持つオブジェクトです。
+```
+{
+  [(target key)]?: z.object({ ... })
+}
+```
+
+`validators` は key が `RequestParams` (`query` や `headers`、`body`) に等しく、value が **Zod オブジェクトスキーマ** (`z.object()`) であるオブジェクトです。
 
 それぞれのスキーマは `z.ZodType` を用いて API 型定義との一貫性が確認されます。
 
@@ -112,7 +118,7 @@ export default defineValidators(() => ({
 }));
 ```
 
-### `defineValidators` 関数 {#function-definevalidators}
+### 関数 `defineValidators` {#definevalidators}
 
 <Tabs
   groupId='base-framework'

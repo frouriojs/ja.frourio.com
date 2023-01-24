@@ -1,0 +1,169 @@
+---
+id: routing
+title: ルーティング
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Frourio では、Next.js のようなファイルシステムに基づいた API ルーティングを用いてコントローラーを定義します。
+定義方法は、影響する範囲に基づいて大まかにコントローラーレベルとディレクトリレベルの 2 つに分類できます。
+
+定義に用いるレベルはコントローラーの要素によって異なりますが、一部の要素では両方のレベルに定義することができます。
+以下の表はこれをまとめたものです。
+
+| 要素                                               |                                     コントローラーレベル                                     |                            ディレクトリレベル                            |
+| -------------------------------------------------- | :------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------: |
+| [**ハンドラー**](/docs/reference/handler)          |                        <span class="badge badge--success">有効</span>                        |                                   :x:                                    |
+| [**フック**](/docs/reference/hooks)                |                        <span class="badge badge--success">有効</span>                        |              <span class="badge badge--success">有効</span>              |
+| [**バリデーター**](/docs/reference/validation/zod) | <span class="badge badge--warning">制限つき</span> &ndash; `body` と `headers`、`query` のみ | <span class="badge badge--warning">制限つき</span> &ndash; `params` のみ |
+| [**スキーマ**](/docs/reference/responseSchema)     |                        <span class="badge badge--success">有効</span>                        |                                   :x:                                    |
+
+## コントローラーレベル {#controller-level}
+
+要素がコントローラーレベルで定義された場合、現在のエンドポイントのみに影響します。
+
+**定義方法** : `controller.ts` 内で `defineController()` を用いる
+
+:::caution
+
+`defineHooks()` と `defineResponseSchema()` は `frourio` および `frourio-express` バージョン `0.31.0` 以降で非推奨となりました。
+
+:::
+
+```ts title='controller.ts'
+import { defineController } from './$relay';
+
+export default defineController(() => ({
+  get: () => ({ status: 200, body: 'Hello' }),
+  post: {
+    validators: {
+      query: z.object({ ... }),
+      body: z.object({ ... }),
+    },
+    schemas: {
+      response: { 201: { type: 'object', properties: { ... } } },
+    },
+    hooks: {
+      preValidation: [],
+      preHandler: (req, _, done) => { ...; done(); },
+    },
+    handler: ({ body }) => ({ status: 201, body: { ... } }),
+  },
+}));
+```
+
+### 関数 `defineController()` {#definecontroller}
+
+#### 引数の型 {#definecontoller-argument-type}
+
+<Tabs
+  groupId='base-framework'
+  defaultValue="fastify"
+  values={[
+    { label: 'Fastify', value: 'fastify' },
+    { label: 'Express', value: 'express' },
+  ]}
+>
+<TabItem value="fastify">
+
+- function `(fastify: FastifyInstance) => ServerMethods`
+  - [`FastifyInstance`](https://www.fastify.io/docs/latest/Reference/TypeScript/#fastifyfastifyinstancerawserver-rawrequest-requestgeneric-logger)
+  - `ServerMethods` : key が `Methods` と等しく、value が [`ServerMethodHandler`](#servermethodhandler) であるオブジェクト。
+
+</TabItem>
+<TabItem value="express">
+
+- function `(app: Express) => ServerMethods`
+  - [`Express`](https://expressjs.com/en/4x/api.html)
+  - `ServerMethods` : key が `Methods` と等しく、value が [`ServerMethodHandler`](#servermethodhandler) であるオブジェクト。
+
+</TabItem>
+</Tabs>
+
+#### 戻り値の型 {#definecontoller-return-type}
+
+- オブジェクト `ServerMethods`
+
+### オブジェクト `ServerMethodHandler` {#servermethodhandler}
+
+<code>
+  {'{\n  validators?: '}
+  <a href="/docs/reference/validation/zod#controller-level">(コントローラーレベル バリデーター)</a>
+  {',\n  schemas?: { response?: { [(HTTP Status Code)]: '}
+  <a href="https://github.com/fastify/fast-json-stringify/blob/master/types/index.d.ts">Schema</a>
+  {' } },\n  hooks?: '}
+  <a href="/docs/reference/hooks#serverhooks">ServerHooks</a>
+  {',\n  handler: '}
+  <a href="/docs/reference/handler#serverhandler">ServerHandler</a>
+  {' or '}
+  <a href="/docs/reference/handler#serverhandler">ServerHandler</a>Promise
+  {',\n}'}
+</code>
+
+`validators` と `schemas`、`hooks` は省略できます。
+`handler` のみを定義する場合、オブジェクトの代わりに [`ServerHandler`](/docs/reference/handler#serverhandler) または <code><a href="/docs/reference/handler#serverhandler">ServerHandler</a>Promise</code> を直接渡すことができます。
+
+## ディレクトリレベル フック {#directory-level-hooks}
+
+要素がディレクトリレベルで定義された場合、現在のエンドポイントと**その下にあるエンドポイント全て**に影響します。
+
+**定義方法** : `hooks.ts` で `defineHooks()` を用いる
+
+```ts title='hooks.ts'
+import { defineHooks } from './$relay';
+
+export default defineHooks(() => ({
+  onRequest: (req, _, done) => {
+    console.log(req.url);
+    done();
+  },
+}));
+```
+
+### 関数 `defineHooks()` {#definehooks}
+
+<Tabs
+  groupId='base-framework'
+  defaultValue="fastify"
+  values={[
+    { label: 'Fastify', value: 'fastify' },
+    { label: 'Express', value: 'express' },
+  ]}
+>
+<TabItem value="fastify">
+
+##### 引数の型 {#definehooks-argument-type}
+
+- function `(fastify: FastifyInstance) => ServerHooks`
+  - `Hooks` : フックの名前を key とし、ハンドラ関数（またはその配列）を value とするオブジェクト
+
+##### 戻り値の型
+
+- `ServerHooks` オブジェクト
+
+</TabItem>
+<TabItem value="express">
+
+#### 引数の型 {#definehooks-argument-type}
+
+- function `(app: Express) => ServerHooks`
+  - `Hooks` : フックの名前を key とし、ハンドラ関数（またはその配列）を value とするオブジェクト
+
+</TabItem>
+</Tabs>
+
+## ディレクトリレベル バリデーター {#directory-level-validators}
+
+**定義方法** : `validators.ts` で `defineValidators()` を用いる
+
+```ts title='validators.ts'
+import { defineValidators } from './$relay';
+import { z } from 'zod';
+
+export default defineValidators(() => ({
+  params: z.object({ id: z.string() }),
+}));
+```
+
+`defineValidators()` についての詳しい情報は、[Zod ページ](/docs/reference/validation/zod#definevalidators)を参照してください。

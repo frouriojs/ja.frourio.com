@@ -11,7 +11,8 @@ module.exports = {
           'create-frourio-app': ['reference/cfa/gui', 'reference/cfa/cui'],
         },
         'reference/aspida',
-        'reference/controller',
+        'reference/routing',
+        'reference/handler',
         'reference/hooks',
         'reference/additionalRequest',
         {
@@ -21,6 +22,7 @@ module.exports = {
             'reference/validation/class-validator',
           ],
         },
+        'reference/responseSchema',
         'reference/cli',
       ],
     },
@@ -30,6 +32,7 @@ module.exports = {
       collapsed: false,
       link: { type: 'doc', id: 'guide/index' },
       items: [
+        'guide/migration',
         'guide/entrypoint',
         'guide/authentication',
         'guide/cors-helmet',
@@ -43,7 +46,6 @@ module.exports = {
             'guide/deployments/server',
           ],
         },
-        'guide/performance',
       ],
     },
   ],

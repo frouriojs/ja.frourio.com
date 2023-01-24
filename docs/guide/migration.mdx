@@ -1,0 +1,38 @@
+---
+id: migration
+title: マイグレーションガイド
+---
+
+ここでは、frourio および frourio-express に関して、特に注意が必要なアップデートについて記載します。
+
+記載されていない変更については、[変更履歴](/changelog)を参照してください。
+
+## v0.31.0 - `defineController()` に統合 {#v0.31.0-define-controller}
+
+<p>
+  <span className="badge badge--primary margin-right--sm">frourio</span>
+  <span className="badge badge--primary">frourio-express</span>
+</p>
+
+コントローラーレベルの `defineHooks()` および `defineResponseSchema()` が非推奨となりました。
+[ルーティングページ](/docs/reference/routing)を参照し、`defineController()` に統合してください。
+
+:::note
+
+混乱を避けるため、従来の「コントローラー」は「ハンドラー」に名称を変更しました。
+
+:::
+
+## v0.31.0 - Fastify v4 に対応 {#v0.31.0-support-fastify-v4}
+
+<p>
+  <span className="badge badge--primary margin-right--sm">frourio</span>
+  <span className="badge badge--secondary">frourio-express</span>
+</p>
+
+`frourio@0.31.0` にて Fastify v4 に対応しました。
+これ以降のバージョンの `frourio` では `fastify@v4` が必要です。
+
+`frourio-express` はこの変更の影響を受けません。
+
+参照: [Fastify V4 Migration Guide - Fastify](https://www.fastify.io/docs/latest/Guides/Migration-Guide-V4/)
