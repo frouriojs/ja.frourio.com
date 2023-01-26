@@ -1,3 +1,4 @@
+/** @type {import('@docusaurus/types').Config} */
 module.exports = {
   title: 'frourio',
   tagline: '高速で型安全な TypeScript のためのフレームワーク',
@@ -156,6 +157,16 @@ module.exports = {
           priority: 0.5,
         },
       },
+    ],
+  ],
+  themes: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      ({
+        hashed: true,
+        language: ['en'],
+      }),
     ],
   ],
 };
