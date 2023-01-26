@@ -12,7 +12,7 @@ module.exports = {
   plugins: ['custom-webpack-config'],
   i18n: {
     locales: ['ja'],
-    defaultLocale: 'ja'
+    defaultLocale: 'ja',
   },
   themeConfig: {
     image: 'img/ogp.png',
