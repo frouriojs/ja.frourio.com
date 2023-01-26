@@ -1,0 +1,23 @@
+{
+  "theme.SearchBar.label": {
+    "message": "検索"
+  },
+  "theme.SearchBar.seeAll": {
+    "message": "すべての結果を見る"
+  },
+  "theme.SearchBar.noResultsText": {
+    "message": "見つかりませんでした…"
+  },
+  "theme.SearchPage.existingResultsTitle": {
+    "message": "“{query}” の検索結果"
+  },
+  "theme.SearchPage.emptyResultsTitle": {
+    "message": "ドキュメントを検索"
+  },
+  "theme.SearchPage.documentsFound.plurals": {
+    "message": "{count} 件のドキュメント"
+  },
+  "theme.SearchPage.noResultsText": {
+    "message": "見つかりませんでした…"
+  }
+}
