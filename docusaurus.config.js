@@ -10,6 +10,10 @@ module.exports = {
   organizationName: 'frouriojs', // Usually your GitHub org/user name.
   projectName: 'ja.frourio.com', // Usually your repo name.
   plugins: ['custom-webpack-config'],
+  i18n: {
+    locales: ['ja'],
+    defaultLocale: 'ja'
+  },
   themeConfig: {
     image: 'img/ogp.png',
     metadata: [
