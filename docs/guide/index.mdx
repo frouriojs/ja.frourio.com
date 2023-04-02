@@ -4,7 +4,82 @@ title: ガイド
 ---
 
 import DocCardList from '@theme/DocCardList';
+import DocPageCard from '@site/src/components/DocPageCard';
+import DocPageCardWrapper from '@site/src/components/DocPageCardWrapper';
 
-Frourio 自体の機能ではないものも含む、Frourio を使用した実用的なアプリケーションのための事例集です。
+Frourio 自体の機能ではないものも含む、frourio を使用した実用的なアプリケーションのための事例集です。
 
-<DocCardList />
+## マイグレーション {#migration}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="マイグレーションガイド"
+    href="/docs/guide/migration"
+    description="特別な注意を要する frourio のアップデート"
+  />
+</DocPageCardWrapper>
+
+## 例 {#examples}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="カスタムエントリーポイント"
+    href="/docs/guide/entrypoint"
+    description="デフォルトのサーバーエントリーポイントを変更する"
+  />
+  <DocPageCard
+    title="認証"
+    href="/docs/guide/authentication"
+    description="外部モジュールを用いた認証の例"
+  />
+  <DocPageCard
+    title="CORS / Helmet"
+    href="/docs/guide/cors-helmet"
+    description="CORS と helmet の外部モジュールを用いた例"
+  />
+  <DocPageCard
+    title="500 エラーハンドリング"
+    href="/docs/guide/error-handling"
+    description="fastify や express に備わった機能を用いて 500 エラーをハンドリングする"
+  />
+  <DocPageCard
+    title="依存性の注入"
+    href="/docs/guide/dependency-injection"
+    description="frourio で velona を利用する"
+  />
+</DocPageCardWrapper>
+
+## 内部リンクへの型付与 {#typed-pages-path}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="Pathpida with Next.js"
+    href="/docs/guide/pathpida/with-nextjs"
+    description="Pathpida を導入しパスの参照を型安全にする"
+  />
+  <DocPageCard
+    title="Pathpida with Nuxt.js"
+    href="/docs/guide/pathpida/with-nuxtjs"
+    description="Pathpida を導入しパスの参照を型安全にする"
+  />
+</DocPageCardWrapper>
+
+## デプロイ (CI/CD) {#deployments}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="継続的インテグレーション (CI)"
+    href="/docs/guide/deployments/ci"
+    description="frourio プロジェクトをテストするためのコマンドと GitHub Actions workflow の例"
+  />
+  <DocPageCard
+    title="クライアント静的ホスティング"
+    href="/docs/guide/deployments/client"
+    description="クライアントをデプロイするいくつかの例"
+  />
+  <DocPageCard
+    title="API サーバーホスティング"
+    href="/docs/guide/deployments/server"
+    description="サーバーをデプロイするいくつかの例"
+  />
+</DocPageCardWrapper>

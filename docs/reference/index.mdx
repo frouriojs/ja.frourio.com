@@ -3,8 +3,92 @@ id: index
 title: リファレンス
 ---
 
-import DocCardList from '@theme/DocCardList';
+import DocPageCard from '@site/src/components/DocPageCard';
+import DocPageCardWrapper from '@site/src/components/DocPageCardWrapper';
 
 Frourio における基本的な仕組みや仕様について説明します。
 
-<DocCardList />
+## create-frourio-app {#create-frourio-app}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="GUI によるセットアップ"
+    href="/docs/reference/cfa/gui"
+    description="create-frourio-app を GUI で用いて frourio プロジェクトをセットアップする手順"
+  />
+  <DocPageCard
+    title="CUI によるセットアップ"
+    href="/docs/reference/cfa/cui"
+    description="CUI での create-frourio-app の使い方と引数に渡す JSON のジェネレーター"
+  />
+</DocPageCardWrapper>
+
+## Aspida {#aspida}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="Aspida"
+    href="/docs/reference/aspida"
+    description="frourio エコシステムにおける aspida の立ち位置"
+  />
+</DocPageCardWrapper>
+
+## frourio でのコントローラー {#controller-in-frourio}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="ルーティング"
+    href="/docs/reference/routing"
+    description="frourio のルーティングシステム"
+  />
+  <DocPageCard
+    title="ハンドラー"
+    href="/docs/reference/handler"
+    description="HTTP リクエストを受け取り実際に処理する関数"
+  />
+  <DocPageCard
+    title="ライフサイクルとフック"
+    href="/docs/reference/hooks"
+    description="ライフサイクルと frourio が提供する fastify に似たフックについて"
+  />
+  <DocPageCard
+    title="AdditionalRequest"
+    href="/docs/reference/additionalRequest"
+    description="FastifyRequest や Request 型を拡張しフックとハンドラーの間で情報を保持する"
+  />
+  <DocPageCard
+    title="レスポンススキーマ"
+    href="/docs/reference/responseSchema"
+    description="レスポンスの JSON スキーマを定義することでサーバーを高速化するメソッド"
+  />
+</DocPageCardWrapper>
+
+## バリデーション {#validation}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="自動バリデーション"
+    href="/docs/reference/validation/automatic"
+    description="frourio がすべての HTTP リクエストに対して自動的に行うバリデーション"
+  />
+  <DocPageCard
+    title="Zod"
+    href="/docs/reference/validation/zod"
+    description="Zod によるユーザー定義のバリデーションを使用する"
+  />
+  <DocPageCard
+    title="class-validator"
+    href="/docs/reference/validation/class-validator"
+    description="[非推奨] class-validator によるユーザー定義のバリデーションを使用する"
+  />
+</DocPageCardWrapper>
+
+## CLI {#cli}
+
+<DocPageCardWrapper>
+  <DocPageCard
+    title="コマンドラインインターフェース"
+    href="/docs/reference/cli"
+    description="frourio エコシステムの CLI ヘルプ"
+  />
+</DocPageCardWrapper>
