@@ -88,7 +88,7 @@ cp ../src/api/hi/index.ts api/hi
 さて、frourio サーバーを起動しましょう！
 
 ```sh title=Terminal
-yarn ts-node index.ts
+yarn ts-node --require tsconfig-paths/register index.ts
 ```
 
 念のため、サーバーが以前と同じように動いているか確認しましょう。

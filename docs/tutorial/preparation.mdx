@@ -20,8 +20,8 @@ cd frourio-tutorial
 mkdir server
 cd server
 yarn init -y
-yarn add fastify @fastify/cors
-yarn add -D typescript ts-node @types/node
+yarn add fastify @fastify/cors zod
+yarn add -D typescript ts-node @types/node tsconfig-paths
 ```
 
 ## 3. Fastify サーバーの作成 {#create-fastify-server}
@@ -51,7 +51,8 @@ fastify.listen({ port: 8888, host: '0.0.0.0' });
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs"
+    "module": "commonjs",
+    "baseUrl": "."
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts"]
