@@ -7,7 +7,6 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import BrowserWindow from '@site/src/components/BrowserWindow';
-import CFA from '@site/src/components/CFA';
 
 ## Frourio プロジェクトの生成 {#generate-frourio-project}
 
@@ -54,10 +53,7 @@ yarn create frourio-app --answers ^"{\^"dir\^":\^"my-project\^"}^"
 </TabItem>
 </Tabs>
 
-`--answers` オプションを使用すると、create-frourio-app は CUI モードで起動します。
-
-オプションに渡す json は、[コマンドジェネレーター](#command-generator)で生成することができます。
-仕様を知る必要がある場合は、[内部実装](https://github.com/frouriojs/create-frourio-app/blob/main/server/common/prompts.ts)を参照してください。
+`--answers` オプションを使用すると、create-frourio-app は CUI モードで起動します。仕様を知る必要がある場合は、[内部実装](https://github.com/frouriojs/create-frourio-app/blob/main/server/common/prompts.ts)を参照してください。
 
 生成が完了すると、[localhost:8000](http://localhost:8000) がブラウザで開かれ、選択したクライアントフレームワークが表示されます。
 （もし自動で開かない場合は、[localhost:8000](http://localhost:8000) を手動で開いてください。）
@@ -85,7 +81,3 @@ yarn create frourio-app --answers ^"{\^"dir\^":\^"my-project\^"}^"
     </BrowserWindow>
   </TabItem>
 </Tabs>
-
-## コマンドジェネレーター {#command-generator}
-
-<CFA />
