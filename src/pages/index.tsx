@@ -114,7 +114,7 @@ function Home() {
 
           <div className={clsx('text--center', styles.feature)}>
             <div className="container">
-              <h2>TypeScript 製で最速のフレームワーク</h2>
+              <h2>TypeScript フレームワークのベンチマーク</h2>
               <BenchmarkChart />
               <div className={clsx('text--center', styles.feature)}>
                 <Link
